@@ -3,7 +3,6 @@
 import {
   BadgeCheck,
   Clock3,
-  Copy,
   Loader2,
   LogOut,
   Menu,
@@ -88,7 +87,6 @@ export default function TVMePage() {
   const [loggingOut, setLoggingOut] = useState(false);
   const [error, setError] = useState('');
   const [localRemoteUrl, setLocalRemoteUrl] = useState('');
-  const [copyStatus, setCopyStatus] = useState('');
   const [upDownAction, setUpDownAction] = useState<TVPlayerUpDownAction>(
     DEFAULT_TV_PLAYER_UP_DOWN_ACTION
   );
@@ -182,16 +180,7 @@ export default function TVMePage() {
 
 
 
-  const copyLocalRemoteUrl = async () => {
-    if (!localRemoteUrl) return;
-    try {
-      await navigator.clipboard?.writeText(localRemoteUrl);
-      setCopyStatus('已复制');
-    } catch {
-      setCopyStatus('请手动输入电视上的地址');
-    }
-    window.setTimeout(() => setCopyStatus(''), 2200);
-  };
+
 
   if (!ready || !authInfo) {
     return (
@@ -313,21 +302,6 @@ export default function TVMePage() {
                     <div className='mt-2 break-all font-mono text-lg font-black text-white'>
                       {localRemoteUrl}
                     </div>
-                    <div className='mt-5 flex flex-wrap gap-3'>
-                      <button
-                        type='button'
-                        onClick={copyLocalRemoteUrl}
-                        className='tv-focusable inline-flex cursor-pointer items-center justify-center gap-2 rounded-2xl bg-white/10 px-5 py-4 text-lg font-black text-white outline-none transition hover:bg-white/15 focus:ring-4 focus:ring-indigo-300'
-                      >
-                        <Copy className='h-6 w-6' />
-                        复制地址
-                      </button>
-                    </div>
-                    {copyStatus && (
-                      <div className='mt-3 text-base font-bold text-emerald-200'>
-                        {copyStatus}
-                      </div>
-                    )}
                   </div>
                 ) : (
                   <div className='mt-6 rounded-3xl border border-amber-300/20 bg-amber-400/10 p-5 text-lg leading-relaxed text-amber-100'>
